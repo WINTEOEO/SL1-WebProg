@@ -157,7 +157,7 @@
                             <input type="text" name="NamaBelakang" id="">
                         </div>
                         <div class="row-input-1">
-                            <input type="text" name="NIK" id="">
+                            <input type="text" name="NIK" pattern="[0-9]{11}">
                         </div>
                         <div class="row-input-1">
                             <input type="tel" name="phone" id="">

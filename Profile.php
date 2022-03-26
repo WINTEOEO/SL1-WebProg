@@ -158,7 +158,7 @@
                 $nama_belakang = $_SESSION['nama-belakang'];
                 $NIK = $_SESSION['NIK'];
                 $no_telp = $_SESSION['no-telp'];
-                $img_path = "images/".$_FILES['berkas']['name'];
+                $img_path = "terupload/".$_FILES['berkas']['name'];
 
                 echo "<b>$nama_belakang</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
                 echo "<b>$NIK</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
