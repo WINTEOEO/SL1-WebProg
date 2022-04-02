@@ -158,19 +158,20 @@
                 $nama_belakang = $_SESSION['nama-belakang'];
                 $NIK = $_SESSION['NIK'];
                 $no_telp = $_SESSION['no-telp'];
-                $img_path = "terupload/".$_FILES['berkas']['name'];
+                $img_path = $_SESSION['foto-profil'];
 
                 echo "<b>$nama_belakang</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
                 echo "<b>$NIK</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
                 echo "<b>$no_telp</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
-                if(move_uploaded_file($_FILES["file"]["tmp_name"], $img_path)) {
-                    echo "<img src=".$img_path." height=1280 width=940 />";
-                } else {
-                    echo "Error!!";
-                }
+                // if(move_uploaded_file($_FILES["file"]["tmp_name"], $img_path)) {
+                    echo "<img src=".$img_path." height=100 width=100 />";
+                // } else {
+                //     echo "Error!!";
+                // }
 
             ?>
         </div>
+        <!-- <img src="<?php echo $_SESSION['foto-profil']; ?>"> -->
     </div>
 </body>
 </html>

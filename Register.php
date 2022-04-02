@@ -48,7 +48,7 @@
         margin-bottom: 4.3rem;
     }
     .row-file-upload{
-        margin-bottom: 2.7rem;
+        margin-bottom: 4.3rem;
         justify-self: space-evenly;
     }
     .row-3{
@@ -81,6 +81,15 @@
         border-radius: 5px;
         border: 3px solid black;
     }
+    .row-special{
+        margin-bottom: 9.1rem;
+    }
+    .row-input-special{
+        margin-bottom: 8.3rem;
+    }
+    input[type="date"]{
+        width: 153px;
+    }
 </style>
 
 <body>
@@ -89,7 +98,12 @@
     </div>
 
     <div class="form-container">
-        <form action="Proses-regist.php" method="post">
+        <!-- <form action="Proses-upload.php" method="post" enctype="multipart/form-data">        
+            <input type="file" name="berkas"/>
+            <input type="submit" value="upload" name="upload">
+        </form> -->
+
+        <form action="Proses-regist.php" method="post" enctype="multipart/form-data">
             <div class="container">
                 <div class="child-container">
                     <div class="col-text">
@@ -162,11 +176,9 @@
                         <div class="row-input-1">
                             <input type="tel" name="phone" id="">
                         </div>
-                        <div class="row-file-upload">
-                            <!-- <form action="Proses-upload.php" method="post" enctype="multipart/form-data">        
-                                <div><input type="file" name="berkas"/></div>
-                                <div><input type="submit" value="Upload" name="Upload"></div>
-                            </form> -->
+                        <div class="row-file-upload">        
+                            <div><input type="file" name="berkas"/></div>
+                            <!-- <div><input type="submit" value="Upload" name="Upload"></div> -->
                         </div>
                         <div class="row-3">
                             <input type="password" name="pass-2" id="">
@@ -182,10 +194,10 @@
             </div>
         </form>
 
-        <form action="Proses-upload.php" method="post" enctype="multipart/form-data">        
+        <!-- <form action="Proses-upload.php" method="post" enctype="multipart/form-data">        
             <input type="file" name="berkas"/>
             <input type="submit" value="upload" name="upload">
-        </form>
+        </form> -->
     </div>
 </body>
 </html>

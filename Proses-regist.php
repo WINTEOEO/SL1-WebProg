@@ -48,17 +48,24 @@
         
         // $allowed_ext = array("jpg", "jpeg", "png");
         // $extension = explode(".", $_FILES['berkas']['name']);
-        // $accepted = true;
+        // $accepted = false;
+
+        // // echo is_bool($accepted);
 
         // if((($_FILES['berkas']['type'] == "image/jpg") || ($_FILES['berkas']['type'] == "image/jpeg") || ($_FILES['berkas']['type'] == "image/png")) && in_array($extension, $allowed_ext)) {
-        //     $dirUpload = "terupload/";
-        //     $terupload = move_uploaded_file($tmp_name, $dirUpload.$nama_file);
+        //     echo is_bool($accepted);
+        //     $destination = "terupload/";
+        //     $terupload = move_uploaded_file($tmp_name, $destination.$nama_file);
+        //     echo is_bool($accepted);
+        //     $accepted = true;
         // } else {
         //     $accepted = false;
-        //     $_SESSION['file-accepted'] = $accepted;
+        //     // echo is_bool($accepted);
         // }
 
-        if(isset($_POST['Register']) && !empty($_FILES)) {
+        // echo is_bool($accepted);
+
+        if(isset($_POST['Register'])) {
 
             $nama_depan = $_POST['NamaDepan'];
             $nama_tengah = $_POST['NamaTengah'];
@@ -75,7 +82,7 @@
             $password_1 = $_POST['pass-1'];
             $password_2 = $_POST['pass-2'];
 
-            if($nama_depan && $nama_tengah && $nama_tengah && $tpt_lahir && $tgl_lahir && $NIK && $warga_negara && $email && $no_telp && $alamat && $kode_pos && $username && $password_1 && $password_2) {
+            if(($nama_depan && $nama_tengah && $nama_tengah && $tpt_lahir && $tgl_lahir && $NIK && $warga_negara && $email && $no_telp && $alamat && $kode_pos && $username && $password_1 && $password_2) && ($password_1 && $password_2)) {
                 $_SESSION['nama-depan'] = $nama_depan;
                 $_SESSION['nama-tengah'] = $nama_tengah;
                 $_SESSION['nama-belakang'] = $nama_belakang;
@@ -91,9 +98,30 @@
                 $_SESSION['password-1'] = $password_1;
                 $_SESSION['password-2'] = $password_2;
 
-                echo "<h1>Selamat Registrasi anda telah berhasil</h1>"; 
-                echo "<br/>";
-                echo "<p>Hai!! $username, Silahkan kembali ke halaman welcome untuk melakukan login melalui tombol di bawah...</p>"; 
+
+                $nama_file = $_FILES['berkas']['name'];
+                $tmp_name = $_FILES['berkas']['tmp_name'];
+                
+                $allowed_ext = array("jpg", "jpeg", "png");
+                $extension = pathinfo($nama_file, PATHINFO_EXTENSION);
+
+                // echo is_bool($accepted);
+
+                if(in_array($extension, $allowed_ext)) {
+                    $destination = "terupload/".$nama_file;
+                    $terupload = move_uploaded_file($tmp_name, $destination);
+
+                    $_SESSION['foto-profil'] = $destination;
+                    // $_SESSION['foto-profil'] = $terupload;
+
+                    echo "<h1>Selamat Registrasi anda telah berhasil</h1>"; 
+                    echo "<br/>";
+                    echo "<p>Hai!! $username, Silahkan kembali ke halaman welcome untuk melakukan login melalui tombol di bawah...</p>";
+                }
+
+                // echo "<h1>Selamat Registrasi anda telah berhasil</h1>"; 
+                // echo "<br/>";
+                // echo "<p>Hai!! $username, Silahkan kembali ke halaman welcome untuk melakukan login melalui tombol di bawah...</p>"; 
             } else{
                 echo "<h1>Maaf, Registrasi anda belum berhasil...</h1>"; 
                 echo "<br/>";
