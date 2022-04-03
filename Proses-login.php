@@ -1,3 +1,12 @@
+<?php
+
+    session_start();
+    if(!$_SESSION['logged-in']){
+        header("Location: index.php");
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,19 +45,27 @@
 <body>
     <?php
 
-        session_start();
+        include("config.php");
 
-        if(isset($_POST['Login'])) {
-            if(isset($_SESSION)) {
-                if(($_POST['username'] == $_SESSION['username-regis']) && ($_POST['password'] == $_SESSION['password-1'])) {
-                    header('Location: home.php');
+        $str_query = "select*from data_user"; 
+        $query = mysqli_query($connection, $str_query);
+
+        if(isset($_POST["Login"])){
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+            while($row = mysqli_fetch_array($query)){
+                if(($row['username'] == $username) && $row['password'] == $password) {
+                    session_start();
+                    $_SESSION['logged-in'] = true;
+                    header("Location: home.php?username=".$row['username']);
                     exit();
-                } else {
-                    echo "<h1>Maaf Login Belum berhasil</h1>";
                 }
             }
-        }
 
+            echo "<h1>Maaf Proses Login anda gagal, silahkan lakukan proses Login kembali...</h1>";
+        }
+        
     ?>
 
     <div class="btn-container">

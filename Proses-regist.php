@@ -1,3 +1,12 @@
+<?php
+
+    session_start();
+    if(!$_SESSION['logged-in']){
+        header("Location: index.php");
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,31 +48,8 @@
 <body>  
     <?php
 
-        session_start();
-
-        // echo "halo";
-
-        // $nama_file = $_FILES['berkas']['name'];
-        // $tmp_name = $_FILES['berkas']['tmp_name'];
-        
-        // $allowed_ext = array("jpg", "jpeg", "png");
-        // $extension = explode(".", $_FILES['berkas']['name']);
-        // $accepted = false;
-
-        // // echo is_bool($accepted);
-
-        // if((($_FILES['berkas']['type'] == "image/jpg") || ($_FILES['berkas']['type'] == "image/jpeg") || ($_FILES['berkas']['type'] == "image/png")) && in_array($extension, $allowed_ext)) {
-        //     echo is_bool($accepted);
-        //     $destination = "terupload/";
-        //     $terupload = move_uploaded_file($tmp_name, $destination.$nama_file);
-        //     echo is_bool($accepted);
-        //     $accepted = true;
-        // } else {
-        //     $accepted = false;
-        //     // echo is_bool($accepted);
-        // }
-
-        // echo is_bool($accepted);
+        // session_start();
+        include("config.php");
 
         if(isset($_POST['Register'])) {
 
@@ -83,21 +69,20 @@
             $password_2 = $_POST['pass-2'];
 
             if(($nama_depan && $nama_tengah && $nama_tengah && $tpt_lahir && $tgl_lahir && $NIK && $warga_negara && $email && $no_telp && $alamat && $kode_pos && $username && $password_1 && $password_2) && ($password_1 && $password_2)) {
-                $_SESSION['nama-depan'] = $nama_depan;
-                $_SESSION['nama-tengah'] = $nama_tengah;
-                $_SESSION['nama-belakang'] = $nama_belakang;
-                $_SESSION['tempat-lahir'] = $tpt_lahir;
-                $_SESSION['tanggal-lahir'] = $tgl_lahir;
-                $_SESSION['NIK'] = $NIK;
-                $_SESSION['warga-negara'] = $warga_negara;
-                $_SESSION['email'] = $email;
-                $_SESSION['no-telp'] = $no_telp;
-                $_SESSION['alamat'] = $alamat;
-                $_SESSION['kode-pos'] = $kode_pos;
-                $_SESSION['username-regis'] = $username;
-                $_SESSION['password-1'] = $password_1;
-                $_SESSION['password-2'] = $password_2;
-
+                // $_SESSION['nama-depan'] = $nama_depan;
+                // $_SESSION['nama-tengah'] = $nama_tengah;
+                // $_SESSION['nama-belakang'] = $nama_belakang;
+                // $_SESSION['tempat-lahir'] = $tpt_lahir;
+                // $_SESSION['tanggal-lahir'] = $tgl_lahir;
+                // $_SESSION['NIK'] = $NIK;
+                // $_SESSION['warga-negara'] = $warga_negara;
+                // $_SESSION['email'] = $email;
+                // $_SESSION['no-telp'] = $no_telp;
+                // $_SESSION['alamat'] = $alamat;
+                // $_SESSION['kode-pos'] = $kode_pos;
+                // $_SESSION['username-regis'] = $username;
+                // $_SESSION['password-1'] = $password_1;
+                // $_SESSION['password-2'] = $password_2;
 
                 $nama_file = $_FILES['berkas']['name'];
                 $tmp_name = $_FILES['berkas']['tmp_name'];
@@ -105,23 +90,26 @@
                 $allowed_ext = array("jpg", "jpeg", "png");
                 $extension = pathinfo($nama_file, PATHINFO_EXTENSION);
 
-                // echo is_bool($accepted);
-
                 if(in_array($extension, $allowed_ext)) {
                     $destination = "terupload/".$nama_file;
                     $terupload = move_uploaded_file($tmp_name, $destination);
 
-                    $_SESSION['foto-profil'] = $destination;
-                    // $_SESSION['foto-profil'] = $terupload;
+                    $str_query = "insert into data_user values('".
+                    $_POST['NamaDepan']."','".$_POST['NamaTengah']."','".$_POST['NamaBelakang']."','".$_POST['TempatLahir']."','".$_POST['Tgl_lhr']."','".$_POST['NIK']."','".$_POST['warga-negara']."','".$_POST['Email']."','".$_POST['phone']."','".$_POST['alamat']."','".$_POST['post-code']."','".$nama_file."','".$_POST['username']."','".$_POST['pass-1']."')";
+                    // echo $str_query;
 
-                    echo "<h1>Selamat Registrasi anda telah berhasil</h1>"; 
-                    echo "<br/>";
-                    echo "<p>Hai!! $username, Silahkan kembali ke halaman welcome untuk melakukan login melalui tombol di bawah...</p>";
-                }
+                    $query = mysqli_query($connection, $str_query);
 
-                // echo "<h1>Selamat Registrasi anda telah berhasil</h1>"; 
-                // echo "<br/>";
-                // echo "<p>Hai!! $username, Silahkan kembali ke halaman welcome untuk melakukan login melalui tombol di bawah...</p>"; 
+                    if($query){
+                        echo "<h1>Selamat Registrasi anda telah berhasil</h1>"; 
+                        echo "<br/>";
+                        echo "<p>Hai!! $username, Silahkan kembali ke halaman welcome untuk melakukan login melalui tombol di bawah...</p>";
+                    } else {
+                        echo "<h1>Maaf, Registrasi anda belum berhasil...</h1>"; 
+                        echo "<br/>";
+                        echo "<p>Silahkan kembali untuk melakukan registrasi ulang</p>";
+                    }
+                } 
             } else{
                 echo "<h1>Maaf, Registrasi anda belum berhasil...</h1>"; 
                 echo "<br/>";

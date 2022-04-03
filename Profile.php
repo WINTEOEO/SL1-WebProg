@@ -1,3 +1,23 @@
+<?php
+
+    session_start();
+    if(!$_SESSION['logged-in']){
+        header("Location: index.php");
+    }
+    
+    include("config.php");
+
+    if(isset($_GET['username'])){
+    
+        $str_query = "select*from data_user where username ='".$_GET['username']."'"; 
+        $query = mysqli_query($connection, $str_query);
+        $row = mysqli_fetch_array($query);
+    }
+
+    $foto = $row['foto_profil'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,6 +89,15 @@
     .col-text-variable{
         margin-right: 5rem;
     }
+    .edit-btn{
+        display: flex;
+        font-size: 50px;
+        background-color: lightyellow;
+        width: 100px;
+        text-decoration: bold;
+        margin-left: 5rem;
+        justify-content: center;
+    }
 </style>
 
 </head>
@@ -106,20 +135,10 @@
         </div>
 
         <div class="col-text-variable">
-            <?php
-                SESSION_start();
-
-                $nama_depan = $_SESSION['nama-depan'];
-                $tpt_lahir = $_SESSION['tempat-lahir'];
-                $warga_negara = $_SESSION['warga-negara'];
-                $alamat = $_SESSION['alamat'];
-
-                echo "<b>$nama_depan</b>"; echo "<br/>"; echo "<br/>";  echo "<br/>";
-                echo "<b>$tpt_lahir</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
-                echo "<b>$warga_negara</b>"; echo "<br/>"; echo "<br/>";echo "<br/>";
-                echo "<b>$alamat</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
-
-            ?>
+            <div class="row"><b><?php echo $row['nama_depan'] ?></b></div>
+            <div class="row"><b><?php echo $row['tempat_lahir'] ?></b></div>
+            <div class="row"><b><?php echo $row['warga_negara'] ?></b></div>
+            <div class="row"><b><?php echo $row['alamat'] ?></b></div>
         </div>
 
         <div class="col-text">
@@ -130,19 +149,10 @@
         </div>
 
         <div class="col-text-variable">
-            <?php
-
-                $nama_tengah = $_SESSION['nama-tengah'];
-                $tgl_lahir = $_SESSION['tanggal-lahir'];
-                $email = $_SESSION['email'];
-                $kode_pos = $_SESSION['kode-pos'];
-
-                echo "<b>$nama_tengah</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
-                echo "<b>$tgl_lahir</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
-                echo "<b>$email</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
-                echo "<b>$kode_pos</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
-
-            ?>
+            <div class="row"><b><?php echo $row['nama_tengah'] ?></b></div>
+            <div class="row"><b><?php echo $row['tanggal_lahir'] ?></b></div>
+            <div class="row"><b><?php echo $row['email'] ?></b></div>
+            <div class="row"><b><?php echo $row['kode_pos'] ?></b></div>
         </div>
 
         <div class="col-text">
@@ -152,7 +162,7 @@
             <div class="row">Foto Profil</div>
         </div>
 
-        <div class="col-text-variable">
+        <!-- <div class="col-text-variable">
             <?php
 
                 $nama_belakang = $_SESSION['nama-belakang'];
@@ -163,15 +173,21 @@
                 echo "<b>$nama_belakang</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
                 echo "<b>$NIK</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
                 echo "<b>$no_telp</b>"; echo "<br/>"; echo "<br/>"; echo "<br/>";
-                // if(move_uploaded_file($_FILES["file"]["tmp_name"], $img_path)) {
-                    echo "<img src=".$img_path." height=100 width=100 />";
-                // } else {
-                //     echo "Error!!";
-                // }
+                echo "<img src=".$img_path." height=100 width=100 />";
 
             ?>
+        </div> -->
+
+        <div class="col-text-variable">
+            <div class="row"><b><?php echo $row['nama_belakang'] ?></b></div>
+            <div class="row"><b><?php echo $row['nik'] ?></b></div>
+            <div class="row"><b><?php echo $row['no.telp'] ?></b></div>
+            <div class="row"><b><?php echo "<img src=".$foto." height=100 width=100 />" ?></b></div>
         </div>
-        <!-- <img src="<?php echo $_SESSION['foto-profil']; ?>"> -->
+    </div>
+
+    <div class="edit-btn">
+        <a href="Edit-profile.php?username=<?php echo $row['username'] ?>" style="text-decoration: none;">Edit</a>
     </div>
 </body>
 </html>

@@ -1,3 +1,21 @@
+<?php
+
+    session_start();
+    if(!$_SESSION['logged-in']){
+        header("Location: index.php");
+    }
+
+    include("config.php");
+
+    if(isset($_GET['username'])){
+    
+        $str_query = "select*from data_user where username ='".$_GET['username']."'"; 
+        $query = mysqli_query($connection, $str_query);
+        $row = mysqli_fetch_array($query);
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +65,7 @@
     .profile-btn:hover, .logout-btn:hover{
         text-decoration: underline;
     }
-    p{
+    .text-home{
         display: flex;
         justify-content: center;
         margin-top: 15rem;
@@ -70,7 +88,7 @@
                 </div>
 
                 <div class="profile-btn">
-                    <a href="profile.php" style="text-decoration: none;">Profile</a>
+                    <a href="profile.php?username=<?php echo $row['username'] ?>" style="text-decoration: none;">Profile</a>
                 </div>
             </div>
 
@@ -80,17 +98,6 @@
         </div>
     </header>
 
-    <?php
-
-        session_start();
-
-        $nama_depan = $_SESSION['nama-depan'];
-        $nama_tengah = $_SESSION['nama-tengah'];
-        $nama_belakang = $_SESSION['nama-belakang'];
-
-        echo nl2br("<p>Halo&nbsp<b>$nama_depan $nama_tengah $nama_belakang</b>, Selamat datang di Aplikasi Pengelolaan Keuangan</p>");
-
-    ?>
-
+    <div class="text-home">Halo <b><?php echo "&nbsp". $row['nama_depan']. " ". $row['nama_tengah']. " ". $row['nama_belakang']. " " ?></b>, Selamat datang di Aplikasi Pengelolaan Keuangan</div>
 </body>
 </html>
